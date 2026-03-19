@@ -301,7 +301,7 @@ export default function App() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="relative max-w-2xl mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white"
+          className="relative max-w-[280px] md:max-w-sm mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white"
         >
           <img 
             src="https://i.imgur.com/FEPbkd0.jpg" 
@@ -503,7 +503,7 @@ export default function App() {
                 className="bg-white p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-md border border-yellow-100 text-center flex flex-col items-center gap-3 md:gap-4"
               >
                 <span className="text-[10px] md:text-xs font-black text-orange-500 uppercase tracking-widest">#BÔNUS {bonus.id} HOJE</span>
-                <div className="w-full aspect-square bg-white rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden">
+                <div className="w-1/2 md:w-2/5 aspect-square mx-auto bg-white rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden">
                    <img 
                     src={bonus.image} 
                     alt={bonus.title} 
