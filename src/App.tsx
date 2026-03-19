@@ -29,10 +29,12 @@ import { motion, AnimatePresence } from 'motion/react';
 
 // --- Components ---
 
-const Button = ({ children, className = "", primary = true, onClick }: { children: React.ReactNode, className?: string, primary?: boolean, onClick?: () => void }) => (
+const Button = ({ children, className = "", primary = true, pulse = false, onClick }: { children: React.ReactNode, className?: string, primary?: boolean, pulse?: boolean, onClick?: () => void }) => (
   <motion.button
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
+    animate={pulse ? { scale: [1, 1.06, 1] } : undefined}
+    transition={pulse ? { repeat: Infinity, duration: 1.5, ease: "easeInOut" } : undefined}
     onClick={onClick}
     className={`w-full py-3 md:py-4 px-6 md:px-8 rounded-full font-bold text-base md:text-lg shadow-lg transition-all uppercase tracking-wider ${
       primary 
@@ -213,6 +215,8 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                   <motion.button
                     whileHover={{ scale: 1.02, translateY: -1 }}
                     whileTap={{ scale: 0.98 }}
+                    animate={{ scale: [1, 1.06, 1] }}
+                    transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
                     onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/jkBWe4OS59Dyx4ClkeoG"}
                     className="w-full bg-gradient-to-b from-green-500 to-green-600 text-white font-black py-4 rounded-xl shadow-lg shadow-green-200 uppercase tracking-wider text-xs md:text-sm border-b-4 border-green-700 relative overflow-hidden group"
                   >
@@ -446,11 +450,11 @@ export default function App() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-white p-6 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl">
-            <div className="w-full md:w-1/2">
+            <div className="w-full md:w-1/2 flex justify-center">
               <img 
                 src="https://i.imgur.com/Sio8CBx.jpg" 
                 alt="Kit Completo" 
-                className="rounded-xl md:rounded-2xl shadow-lg w-full h-auto"
+                className="rounded-xl md:rounded-2xl shadow-lg w-full max-w-[240px] md:max-w-[320px] h-auto"
                 referrerPolicy="no-referrer"
                 loading="lazy"
               />
@@ -495,7 +499,7 @@ export default function App() {
               { id: "03", title: "Kit Maquiagem e Guarda-Roupa", desc: "Mais acessórios para personalizar as suas bonecas e aumentar o tempo de diversão.", icon: <Star className="text-pink-400" />, image: "https://i.imgur.com/Dm5cjTx.jpg" },
               { id: "04", title: "Vídeo Aula Completa", desc: "Coloque sua filha para acompanhar um vídeo com o passo a passo simples para montar todas as casinhas.", icon: <Video className="text-red-400" />, image: "https://i.imgur.com/XMVR3cH.jpg" },
               { id: "05", title: "Suporte 24h via WhatsApp", desc: "Se precisar de ajuda ou tirar alguma dúvida, não importa a hora, nos envie mensagem.", icon: <MessageCircle className="text-emerald-400" />, image: "https://i.imgur.com/J9zVbXl.jpg" },
-              { id: "06", title: "Garantia Estendida", desc: "Por lei devemos entregar 7 dias de garantia. Teste sem risco.", icon: <ShieldCheck className="text-orange-400" />, image: "https://i.imgur.com/ronGLMi.jpg" }
+              { id: "06", title: "Garantia Estendida", desc: "Por lei devemos entregar 7 dias de garantia, mas estendemos para 10 dias. Teste sem risco.", icon: <ShieldCheck className="text-orange-400" />, image: "https://i.imgur.com/Ne59Jby.jpg" }
             ].map((bonus, i) => (
               <motion.div 
                 key={i}
@@ -532,14 +536,14 @@ export default function App() {
               <img 
                 src="https://i.imgur.com/FE9hX3D.jpg" 
                 alt="Plano Básico" 
-                className="rounded-xl shadow-md mx-auto mb-6 md:mb-8 w-full max-w-[200px] md:max-w-[240px] h-auto object-contain"
+                className="rounded-xl shadow-md mx-auto mb-6 md:mb-8 w-full max-w-[140px] md:max-w-[180px] h-auto object-contain"
                 referrerPolicy="no-referrer"
                 loading="lazy"
               />
               <ul className="text-left space-y-3 md:space-y-4 mb-6 md:mb-8">
                 <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-sm md:text-base">
                   <Check size={18} className="text-green-500 shrink-0" />
-                  <span>Kit 5 Casinhas de Boneca em Papel em PDF para imprimir</span>
+                  <span>Kit 5 Casinhas exclusivas realistas</span>
                 </li>
               </ul>
             </div>
@@ -571,8 +575,20 @@ export default function App() {
               />
               <ul className="text-left space-y-3 mb-6 md:mb-8">
                 <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
-                  <Check size={16} className="text-pink-500 shrink-0" />
-                  <span>Kit 5 Casinhas exclusivas ultra realistas</span>
+                  <Check size={16} className="text-green-500 shrink-0" />
+                  <span>Kit 5 Casinhas de Boneca em Papel em PDF para imprimir ultrarealista</span>
+                </li>
+                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                  <Check size={16} className="text-green-500 shrink-0" />
+                  <span>Acesso Vitálicio</span>
+                </li>
+                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                  <Check size={16} className="text-green-500 shrink-0" />
+                  <span>Garantia de 10 dias</span>
+                </li>
+                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                  <Check size={16} className="text-green-500 shrink-0" />
+                  <span>Atualizações Semanais no conteúdo</span>
                 </li>
 
                 <div className="pt-3 md:pt-4 pb-1 md:pb-2 text-amber-600 font-black text-[9px] md:text-xs uppercase tracking-widest flex items-center gap-2">
@@ -589,7 +605,7 @@ export default function App() {
                     { label: "BÔNUS 4", text: "Kit Maquiagem e Guarda Roupa", value: "R$ 19,90" },
                     { label: "BÔNUS 5", text: "Vídeo Aula completa com passo a passo", value: "R$ 47,00" },
                     { label: "BÔNUS 6", text: "Suporte 24h por WhatsApp", value: "R$ 29,90" },
-                    { label: "BÔNUS 7", text: "Garantia estendida de 7 dias", value: "R$ 9,90" }
+                    { label: "BÔNUS 7", text: "Garantia estendida de 10 dias", value: "R$ 9,90" }
                   ].map((item, i) => (
                     <li key={i} className="group relative flex flex-col gap-1 bg-white p-3 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md hover:border-amber-400 transition-all duration-300 overflow-hidden">
                       <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -623,7 +639,7 @@ export default function App() {
                 Você economiza R$70,00
               </div>
             </div>
-            <Button className="shadow-lg shadow-green-200 py-3 md:py-4" onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/txOIFXqyODBujlDkEJwL"}>GARANTIR O PLANO COMPLETO</Button>
+            <Button pulse={true} className="shadow-lg shadow-green-200 py-3 md:py-4" onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/txOIFXqyODBujlDkEJwL"}>GARANTIR O PLANO COMPLETO</Button>
             <p className="mt-4 text-xs font-bold text-orange-600 flex items-center justify-center gap-1">
               🔥 Oferta promocional por tempo limitado.
             </p>
