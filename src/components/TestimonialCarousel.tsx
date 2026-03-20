@@ -13,10 +13,23 @@ export function TestimonialCarousel() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % testimonialImages.length);
-    }, 2000);
-    return () => clearInterval(timer);
+    let timer: NodeJS.Timeout;
+    const startCarousel = () => {
+      timer = setInterval(() => {
+        setCurrent((prev) => (prev + 1) % testimonialImages.length);
+      }, 2000);
+    };
+
+    if (document.readyState === 'complete') {
+      startCarousel();
+    } else {
+      window.addEventListener('load', startCarousel);
+    }
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('load', startCarousel);
+    };
   }, []);
 
   const next = () => setCurrent((prev) => (prev + 1) % testimonialImages.length);
@@ -38,6 +51,7 @@ export function TestimonialCarousel() {
             referrerPolicy="no-referrer"
             loading={current === 0 ? "eager" : "lazy"}
             fetchPriority={current === 0 ? "high" : "auto"}
+            decoding={current === 0 ? "sync" : "async"}
           />
         </AnimatePresence>
         {/* Preload next image - Moved outside AnimatePresence to fix mode="wait" error */}
@@ -46,6 +60,8 @@ export function TestimonialCarousel() {
           className="hidden" 
           aria-hidden="true" 
           referrerPolicy="no-referrer"
+          loading="lazy"
+          decoding="async"
         />
       </div>
 

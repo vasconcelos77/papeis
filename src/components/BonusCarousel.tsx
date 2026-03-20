@@ -15,10 +15,23 @@ export const BonusCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % bonuses.length);
-    }, 2000);
-    return () => clearInterval(timer);
+    let timer: NodeJS.Timeout;
+    const startCarousel = () => {
+      timer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % bonuses.length);
+      }, 2000);
+    };
+
+    if (document.readyState === 'complete') {
+      startCarousel();
+    } else {
+      window.addEventListener('load', startCarousel);
+    }
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener('load', startCarousel);
+    };
   }, []);
 
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % bonuses.length);
@@ -52,6 +65,7 @@ export const BonusCarousel = () => {
                 referrerPolicy="no-referrer"
                 loading={currentIndex === 0 ? "eager" : "lazy"}
                 fetchPriority={currentIndex === 0 ? "high" : "auto"}
+                decoding={currentIndex === 0 ? "sync" : "async"}
               />
               {/* Preload next image */}
               <img 
@@ -59,6 +73,8 @@ export const BonusCarousel = () => {
                 className="hidden" 
                 aria-hidden="true" 
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <h4 className="text-xl md:text-2xl font-heading font-extrabold text-gray-800 leading-tight mt-2">{bonuses[currentIndex].title}</h4>

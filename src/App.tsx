@@ -252,7 +252,18 @@ export default function App() {
   const [isMuted, setIsMuted] = useState(true);
   const [wistiaVideo, setWistiaVideo] = useState<any>(null);
 
-  useEffect(() => {
+  const [wistiaLoaded, setWistiaLoaded] = useState(false);
+
+  const loadWistia = useCallback(() => {
+    if (wistiaLoaded) return;
+    setWistiaLoaded(true);
+    
+    // Inject script dynamically
+    const script = document.createElement("script");
+    script.src = "https://fast.wistia.com/assets/external/E-v1.js";
+    script.async = true;
+    document.body.appendChild(script);
+
     (window as any)._wq = (window as any)._wq || [];
     (window as any)._wq.push({
       id: 'k7sb8rq5q6',
@@ -271,7 +282,7 @@ export default function App() {
         });
       }
     });
-  }, []);
+  }, [wistiaLoaded]);
 
   const materialImages = [
     "/hero.jpg", // Moved from Imgur to local asset for LCP optimization
@@ -312,63 +323,82 @@ export default function App() {
 
       {/* Hero Section */}
       <Section className="text-center pt-6 md:pt-8 pb-10 md:pb-12">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-[28px] md:text-5xl font-heading font-extrabold leading-snug md:leading-normal mb-4 md:mb-6 max-w-4xl mx-auto text-balance tracking-tight"
+        <h1 
+          className="animate-fade-in-up text-[28px] md:text-5xl font-heading font-extrabold leading-snug md:leading-normal mb-4 md:mb-6 max-w-4xl mx-auto text-balance tracking-tight"
         >
           <span className="text-pink-600">Kit de casinhas de boneca em papel</span><br className="hidden md:block" /> que <span className="underline decoration-pink-400">tira sua filha do celular</span>
-        </motion.h1>
+        </h1>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="inline-block bg-orange-500 text-white text-[10px] md:text-xs font-heading font-bold px-4 py-1 rounded-full mb-6 md:mb-8 shadow-sm"
+        <div 
+          className="animate-fade-in-scale delay-200 inline-block bg-orange-500 text-white text-[10px] md:text-xs font-heading font-bold px-4 py-1 rounded-full mb-6 md:mb-8 shadow-sm"
         >
           +6 BÔNUS INCLUSOS
-        </motion.div>
+        </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="relative max-w-[220px] md:max-w-[280px] mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white bg-gray-100 aspect-[9/16]"
+        <div 
+          className="animate-fade-in-up delay-300 relative max-w-[220px] md:max-w-[280px] mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white bg-gray-100 aspect-[9/16]"
         >
-          <div className="wistia_embed wistia_async_k7sb8rq5q6 autoPlay=true muted=true" style={{ width: '100%', height: '100%' }}></div>
-          
-          {/* Custom Mute/Unmute Overlays */}
-          {wistiaVideo && isMuted && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  wistiaVideo.unmute();
-                  setIsMuted(false);
-                }}
-                className="pointer-events-auto bg-pink-600/90 hover:bg-pink-600 text-white font-heading font-bold py-3 px-5 md:px-6 rounded-full shadow-[0_0_20px_rgba(219,39,119,0.6)] flex items-center gap-2 md:gap-3 animate-pulse transition-transform hover:scale-105"
-                title="Ativar som"
-              >
-                <Volume2 size={24} />
-                <span className="text-sm md:text-base uppercase tracking-wider">Ativar Som</span>
-              </button>
-            </div>
-          )}
-
-          {wistiaVideo && !isMuted && (
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                wistiaVideo.mute();
-                setIsMuted(true);
-              }}
-              className="absolute top-2 right-2 md:top-4 md:right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10 shadow-lg backdrop-blur-sm"
-              title="Desligar som"
+          {!wistiaLoaded ? (
+            <div 
+              className="relative w-full h-full cursor-pointer group"
+              onClick={loadWistia}
             >
-              <VolumeX size={18} />
-            </button>
+              <img 
+                src="https://fast.wistia.com/embed/medias/k7sb8rq5q6/swatch" 
+                alt="Video Thumbnail" 
+                className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
+              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                <button 
+                  className="pointer-events-auto bg-pink-600/90 hover:bg-pink-600 text-white font-heading font-bold py-3 px-5 md:px-6 rounded-full shadow-[0_0_20px_rgba(219,39,119,0.6)] flex items-center gap-2 md:gap-3 animate-pulse transition-transform hover:scale-105"
+                  title="Ativar som"
+                >
+                  <Volume2 size={24} />
+                  <span className="text-sm md:text-base uppercase tracking-wider">Ativar Som</span>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="wistia_embed wistia_async_k7sb8rq5q6 autoPlay=true muted=true" style={{ width: '100%', height: '100%' }}></div>
+              
+              {/* Custom Mute/Unmute Overlays */}
+              {wistiaVideo && isMuted && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      wistiaVideo.unmute();
+                      setIsMuted(false);
+                    }}
+                    className="pointer-events-auto bg-pink-600/90 hover:bg-pink-600 text-white font-heading font-bold py-3 px-5 md:px-6 rounded-full shadow-[0_0_20px_rgba(219,39,119,0.6)] flex items-center gap-2 md:gap-3 animate-pulse transition-transform hover:scale-105"
+                    title="Ativar som"
+                  >
+                    <Volume2 size={24} />
+                    <span className="text-sm md:text-base uppercase tracking-wider">Ativar Som</span>
+                  </button>
+                </div>
+              )}
+
+              {wistiaVideo && !isMuted && (
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    wistiaVideo.mute();
+                    setIsMuted(true);
+                  }}
+                  className="absolute top-2 right-2 md:top-4 md:right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10 shadow-lg backdrop-blur-sm"
+                  title="Desligar som"
+                >
+                  <VolumeX size={18} />
+                </button>
+              )}
+            </>
           )}
-        </motion.div>
+        </div>
 
         <p className="text-base md:text-xl text-gray-700 max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-2">
           <span className="font-heading font-bold text-pink-600">Moldes de casinhas + bonecas interativas</span> prontas para imprimir: ela monta, cria e esquece que o celular existe por um <span className="font-heading font-extrabold text-green-500 text-xl md:text-2xl">preço acessível</span>.
@@ -411,6 +441,7 @@ export default function App() {
                     referrerPolicy="no-referrer"
                     loading={currentImage === 0 ? "eager" : "lazy"}
                     fetchPriority={currentImage === 0 ? "high" : "auto"}
+                    decoding={currentImage === 0 ? "sync" : "async"}
                   />
                   {/* Preload next image */}
                   <img 
@@ -418,6 +449,8 @@ export default function App() {
                     className="hidden" 
                     aria-hidden="true" 
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </AnimatePresence>
               </div>
@@ -503,10 +536,9 @@ export default function App() {
                 desc: "Quando ela monta com as próprias mãos, sente que conseguiu. Esse sentimento aumenta a confiança, o foco e faz ela querer montar mais."
               }
             ].map((benefit, i) => (
-              <motion.div 
+              <div 
                 key={i}
-                whileHover={{ y: -8 }}
-                className="group relative bg-white p-8 md:p-10 rounded-[2rem] shadow-xl border border-pink-100/50 text-left flex flex-col items-start gap-4 md:gap-6 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-pink-200"
+                className="group relative bg-white p-8 md:p-10 rounded-[2rem] shadow-xl border border-pink-100/50 text-left flex flex-col items-start gap-4 md:gap-6 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-pink-200 hover:-translate-y-2"
               >
                 {/* Subtle corner gradient */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-50 to-purple-50 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-110"></div>
@@ -522,7 +554,7 @@ export default function App() {
                 <p className="text-base md:text-lg text-gray-600 leading-relaxed">
                   {benefit.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -570,6 +602,7 @@ export default function App() {
                     className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-white object-cover"
                     referrerPolicy="no-referrer"
                     loading="lazy"
+                    decoding="async"
                   />
                 ))}
               </div>
@@ -598,6 +631,7 @@ export default function App() {
                 className="rounded-xl shadow-md mx-auto mb-6 md:mb-8 w-full max-w-[140px] md:max-w-[180px] h-auto object-contain"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <ul className="text-left space-y-3 md:space-y-4 mb-6 md:mb-8">
                 <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-sm md:text-base">
@@ -631,6 +665,7 @@ export default function App() {
                 className="rounded-xl shadow-md mx-auto mb-6 md:mb-8 w-full max-w-[200px] md:max-w-[240px] h-auto object-contain"
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
               />
               <ul className="text-left space-y-3 mb-6 md:mb-8">
                 <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-xs md:text-sm">
