@@ -266,7 +266,7 @@ export default function App() {
 
     (window as any)._wq = (window as any)._wq || [];
     (window as any)._wq.push({
-      id: 'k7sb8rq5q6',
+      id: '4sgaryyt0t',
       options: {
         autoPlay: true,
         muted: true,
@@ -349,7 +349,7 @@ export default function App() {
               onClick={loadWistia}
             >
               <img 
-                src="https://fast.wistia.com/embed/medias/k7sb8rq5q6/swatch" 
+                src="https://fast.wistia.com/embed/medias/4sgaryyt0t/swatch" 
                 alt="Video Thumbnail" 
                 className="w-full h-full object-cover"
                 loading="eager"
@@ -368,7 +368,7 @@ export default function App() {
             </div>
           ) : (
             <>
-              <div className="wistia_embed wistia_async_k7sb8rq5q6 autoPlay=true muted=true" style={{ width: '100%', height: '100%' }}></div>
+              <div className="wistia_embed wistia_async_4sgaryyt0t autoPlay=true muted=true" style={{ width: '100%', height: '100%' }}></div>
               
               {/* Custom Mute/Unmute Overlays */}
               {wistiaVideo && isMuted && (
