@@ -11,6 +11,17 @@ const testimonialImages = [
 
 export function TestimonialCarousel() {
   const [current, setCurrent] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0, 1, testimonialImages.length - 1]));
+
+  useEffect(() => {
+    setLoadedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.add(current);
+      newSet.add((current + 1) % testimonialImages.length);
+      newSet.add((current - 1 + testimonialImages.length) % testimonialImages.length);
+      return newSet;
+    });
+  }, [current]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -39,16 +50,18 @@ export function TestimonialCarousel() {
     <div className="relative max-w-2xl mx-auto group">
       <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl">
         {testimonialImages.map((src, idx) => (
-          <img
-            key={idx}
-            src={src}
-            alt={`Depoimento ${idx + 1}`}
-            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${current === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-            referrerPolicy="no-referrer"
-            loading={idx === 0 ? "eager" : "lazy"}
-            fetchPriority={idx === 0 ? "high" : "auto"}
-            decoding={idx === 0 ? "sync" : "async"}
-          />
+          loadedImages.has(idx) && (
+            <img
+              key={idx}
+              src={src}
+              alt={`Depoimento ${idx + 1}`}
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${current === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+              referrerPolicy="no-referrer"
+              loading={idx === 0 ? "eager" : "lazy"}
+              fetchPriority={idx === 0 ? "high" : "auto"}
+              decoding={idx === 0 ? "sync" : "async"}
+            />
+          )
         ))}
       </div>
 

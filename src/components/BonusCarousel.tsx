@@ -13,6 +13,17 @@ const bonuses = [
 
 export const BonusCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0, 1, bonuses.length - 1]));
+
+  useEffect(() => {
+    setLoadedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.add(currentIndex);
+      newSet.add((currentIndex + 1) % bonuses.length);
+      newSet.add((currentIndex - 1 + bonuses.length) % bonuses.length);
+      return newSet;
+    });
+  }, [currentIndex]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -50,16 +61,18 @@ export const BonusCarousel = () => {
           
           <div className="w-40 h-40 md:w-48 md:h-48 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden border border-gray-100 mt-2 shadow-inner relative">
             {bonuses.map((bonus, idx) => (
-              <img 
-                key={idx}
-                src={bonus.image} 
-                alt={bonus.title} 
-                className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-200 ${currentIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                referrerPolicy="no-referrer"
-                loading={idx === 0 ? "eager" : "lazy"}
-                fetchPriority={idx === 0 ? "high" : "auto"}
-                decoding={idx === 0 ? "sync" : "async"}
-              />
+              loadedImages.has(idx) && (
+                <img 
+                  key={idx}
+                  src={bonus.image} 
+                  alt={bonus.title} 
+                  className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-200 ${currentIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                  referrerPolicy="no-referrer"
+                  loading={idx === 0 ? "eager" : "lazy"}
+                  fetchPriority={idx === 0 ? "high" : "auto"}
+                  decoding={idx === 0 ? "sync" : "async"}
+                />
+              )
             ))}
           </div>
           <h4 className="text-xl md:text-2xl font-heading font-extrabold text-gray-800 leading-tight mt-2">{bonuses[currentIndex].title}</h4>
