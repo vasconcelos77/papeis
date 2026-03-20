@@ -319,7 +319,7 @@ export default function App() {
       
       {/* Top Banner */}
       <div className="bg-red-600 text-white py-2 text-center text-xs md:text-sm font-heading font-bold tracking-widest uppercase">
-        ESSA PROMOÇÃO ACABA HOJE 18/03/2026
+        ESSA PROMOÇÃO ACABA HOJE {new Date().toLocaleDateString('pt-BR')}
       </div>
 
       {/* Hero Section */}
@@ -529,6 +529,15 @@ export default function App() {
                 </p>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-12 md:mt-16 max-w-md mx-auto">
+            <a href="#pricing">
+              <Button pulse={true}>QUERO RECEBER AGORA</Button>
+            </a>
+            <p className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-500 font-medium">
+              <Check size={16} className="text-green-500" /> Entrega imediata
+            </p>
           </div>
         </Section>
       </div>
@@ -776,7 +785,7 @@ export default function App() {
           <p className="text-red-500 font-heading font-extrabold text-lg mb-4 uppercase tracking-widest">PIRATARIA É CRIME.</p>
           <p className="text-gray-400 text-sm mb-8">Proibido a comercialização desse produto fora dessa página. Denuncie.</p>
           <div className="h-px bg-gray-800 w-full mb-8"></div>
-          <p className="text-gray-500 text-xs mb-4">Todos os direitos reservados a Tuto Biblioteca digital.</p>
+          <p className="text-gray-500 text-xs mb-4">© {new Date().getFullYear()} Todos os direitos reservados a Tuto Biblioteca digital.</p>
           <p className="text-gray-500 text-xs">Compra 100% segura. Garantia de 7 ou 30 dias conforme plano escolhido.</p>
         </div>
       </footer>
