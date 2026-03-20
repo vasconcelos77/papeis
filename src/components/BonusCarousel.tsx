@@ -42,45 +42,29 @@ export const BonusCarousel = () => {
       className="relative max-w-sm md:max-w-md mx-auto"
     >
       <div className="overflow-hidden px-4 py-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, scale: 0.9, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white p-6 md:p-8 rounded-3xl shadow-xl border-2 border-orange-100 text-center flex flex-col items-center gap-4 relative"
-          >
-            {/* Highlighted Enumeration */}
-            <div className="absolute -top-4 -left-2 md:-left-4 px-4 py-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center text-white font-heading font-extrabold text-sm md:text-base shadow-lg border-2 border-white z-10 transform -rotate-6 whitespace-nowrap">
-              BÔNUS {bonuses[currentIndex].id}
-            </div>
-            
-            <div className="w-40 h-40 md:w-48 md:h-48 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden border border-gray-100 mt-2 shadow-inner">
-               {/* Corrected fetchPriority to camelCase for React compatibility */}
-               <img 
-                src={bonuses[currentIndex].image} 
-                alt={bonuses[currentIndex].title} 
-                className="w-full h-full object-contain p-2"
-                referrerPolicy="no-referrer"
-                loading={currentIndex === 0 ? "eager" : "lazy"}
-                fetchPriority={currentIndex === 0 ? "high" : "auto"}
-                decoding={currentIndex === 0 ? "sync" : "async"}
-              />
-              {/* Preload next image */}
+        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-xl border-2 border-orange-100 text-center flex flex-col items-center gap-4 relative">
+          {/* Highlighted Enumeration */}
+          <div className="absolute -top-4 -left-2 md:-left-4 px-4 py-2 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center text-white font-heading font-extrabold text-sm md:text-base shadow-lg border-2 border-white z-10 transform -rotate-6 whitespace-nowrap">
+            BÔNUS {bonuses[currentIndex].id}
+          </div>
+          
+          <div className="w-40 h-40 md:w-48 md:h-48 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden border border-gray-100 mt-2 shadow-inner relative">
+            {bonuses.map((bonus, idx) => (
               <img 
-                src={bonuses[(currentIndex + 1) % bonuses.length].image} 
-                className="hidden" 
-                aria-hidden="true" 
+                key={idx}
+                src={bonus.image} 
+                alt={bonus.title} 
+                className={`absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-200 ${currentIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                 referrerPolicy="no-referrer"
-                loading="lazy"
-                decoding="async"
+                loading={idx === 0 ? "eager" : "lazy"}
+                fetchPriority={idx === 0 ? "high" : "auto"}
+                decoding={idx === 0 ? "sync" : "async"}
               />
-            </div>
-            <h4 className="text-xl md:text-2xl font-heading font-extrabold text-gray-800 leading-tight mt-2">{bonuses[currentIndex].title}</h4>
-            <p className="text-sm md:text-base text-gray-600 px-2">{bonuses[currentIndex].desc}</p>
-          </motion.div>
-        </AnimatePresence>
+            ))}
+          </div>
+          <h4 className="text-xl md:text-2xl font-heading font-extrabold text-gray-800 leading-tight mt-2">{bonuses[currentIndex].title}</h4>
+          <p className="text-sm md:text-base text-gray-600 px-2">{bonuses[currentIndex].desc}</p>
+        </div>
       </div>
 
       <button 

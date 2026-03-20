@@ -285,8 +285,8 @@ export default function App() {
   }, [wistiaLoaded]);
 
   const materialImages = [
-    "/hero.jpg", // Moved from Imgur to local asset for LCP optimization
     "https://i.imgur.com/zUzHdmP.jpg",
+    "https://i.imgur.com/MmGrhXc.jpg",
     "https://i.imgur.com/wmDRCi6.jpg",
     "https://i.imgur.com/IxQaqtU.jpg",
     "https://i.imgur.com/7G1sMuA.jpg",
@@ -428,31 +428,18 @@ export default function App() {
               </div>
               
               <div className="relative aspect-square md:aspect-[16/10] overflow-hidden rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 shadow-inner">
-                <AnimatePresence>
-                  <motion.img 
-                    key={currentImage}
-                    src={materialImages[currentImage]} 
-                    alt={`Material Preview ${currentImage + 1}`} 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0 w-full h-full object-contain"
-                    referrerPolicy="no-referrer"
-                    loading={currentImage === 0 ? "eager" : "lazy"}
-                    fetchPriority={currentImage === 0 ? "high" : "auto"}
-                    decoding={currentImage === 0 ? "sync" : "async"}
-                  />
-                  {/* Preload next image */}
+                {materialImages.map((src, idx) => (
                   <img 
-                    src={materialImages[(currentImage + 1) % materialImages.length]} 
-                    className="hidden" 
-                    aria-hidden="true" 
+                    key={idx}
+                    src={src} 
+                    alt={`Material Preview ${idx + 1}`} 
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${currentImage === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                     referrerPolicy="no-referrer"
-                    loading="lazy"
-                    decoding="async"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    fetchPriority={idx === 0 ? "high" : "auto"}
+                    decoding={idx === 0 ? "sync" : "async"}
                   />
-                </AnimatePresence>
+                ))}
               </div>
 
               <button 

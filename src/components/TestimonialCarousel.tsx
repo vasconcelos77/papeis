@@ -38,31 +38,18 @@ export function TestimonialCarousel() {
   return (
     <div className="relative max-w-2xl mx-auto group">
       <div className="relative aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-2xl md:rounded-3xl">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={current}
-            src={testimonialImages[current]}
-            alt={`Depoimento ${current + 1}`}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 w-full h-full object-contain"
+        {testimonialImages.map((src, idx) => (
+          <img
+            key={idx}
+            src={src}
+            alt={`Depoimento ${idx + 1}`}
+            className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${current === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             referrerPolicy="no-referrer"
-            loading={current === 0 ? "eager" : "lazy"}
-            fetchPriority={current === 0 ? "high" : "auto"}
-            decoding={current === 0 ? "sync" : "async"}
+            loading={idx === 0 ? "eager" : "lazy"}
+            fetchPriority={idx === 0 ? "high" : "auto"}
+            decoding={idx === 0 ? "sync" : "async"}
           />
-        </AnimatePresence>
-        {/* Preload next image - Moved outside AnimatePresence to fix mode="wait" error */}
-        <img 
-          src={testimonialImages[(current + 1) % testimonialImages.length]} 
-          className="hidden" 
-          aria-hidden="true" 
-          referrerPolicy="no-referrer"
-          loading="lazy"
-          decoding="async"
-        />
+        ))}
       </div>
 
       <button
