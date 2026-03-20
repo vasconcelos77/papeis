@@ -28,6 +28,8 @@ export default defineConfig(({mode}) => {
       },
     },
     build: {
+      target: 'esnext',
+      cssMinify: true,
       minify: 'terser',
       modulePreload: {
         polyfill: true,

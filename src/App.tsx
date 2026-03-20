@@ -31,6 +31,21 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BonusCarousel } from './components/BonusCarousel';
 import { TestimonialCarousel } from './components/TestimonialCarousel';
 
+function redirectWithParams(destination: string) {
+  const currentParams = window.location.search;
+
+  if (!currentParams) {
+    window.location.href = destination;
+    return;
+  }
+
+  if (destination.includes("?")) {
+    window.location.href = destination + "&" + currentParams.substring(1);
+  } else {
+    window.location.href = destination + currentParams;
+  }
+}
+
 // --- Components ---
 
 const Button = ({ children, className = "", primary = true, pulse = false, onClick }: { children: React.ReactNode, className?: string, primary?: boolean, pulse?: boolean, onClick?: () => void }) => (
@@ -221,7 +236,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                     whileTap={{ scale: 0.98 }}
                     animate={{ scale: [1, 1.06, 1] }}
                     transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                    onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/jkBWe4OS59Dyx4ClkeoG"}
+                    onClick={() => redirectWithParams("https://www.ggcheckout.com/checkout/v5/jkBWe4OS59Dyx4ClkeoG")}
                     className="w-full bg-gradient-to-b from-green-500 to-green-600 text-white font-heading font-extrabold py-4 rounded-xl shadow-lg shadow-green-200 uppercase tracking-wider text-xs md:text-sm border-b-4 border-green-700 relative overflow-hidden group"
                   >
                     <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 skew-x-12"></div>
@@ -229,7 +244,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                   </motion.button>
 
                   <button 
-                    onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/qZkZ4iGHvWusfr3cHOL6"}
+                    onClick={() => redirectWithParams("https://www.ggcheckout.com/checkout/v5/qZkZ4iGHvWusfr3cHOL6")}
                     className="text-[9px] md:text-[10px] font-heading font-bold text-zinc-400 uppercase tracking-[0.2em] hover:text-zinc-800 transition-colors flex items-center justify-center gap-2 mx-auto"
                   >
                     <span>GARANTIR APENAS O BÁSICO</span>
@@ -724,7 +739,7 @@ export default function App() {
                 Você economiza R$70,00
               </div>
             </div>
-            <Button pulse={true} className="shadow-lg shadow-green-200 py-3 md:py-4" onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/txOIFXqyODBujlDkEJwL"}>GARANTIR O PLANO COMPLETO</Button>
+            <Button pulse={true} className="shadow-lg shadow-green-200 py-3 md:py-4" onClick={() => redirectWithParams("https://www.ggcheckout.com/checkout/v5/txOIFXqyODBujlDkEJwL")}>GARANTIR O PLANO COMPLETO</Button>
             <p className="mt-4 text-xs font-medium text-orange-600 flex items-center justify-center gap-1">
               🔥 Oferta promocional por tempo limitado.
             </p>
