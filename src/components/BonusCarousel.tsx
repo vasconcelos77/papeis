@@ -52,6 +52,13 @@ export const BonusCarousel = () => {
                 loading={currentIndex === 0 ? "eager" : "lazy"}
                 fetchpriority={currentIndex === 0 ? "high" : "auto"}
               />
+              {/* Preload next image */}
+              <img 
+                src={bonuses[(currentIndex + 1) % bonuses.length].image} 
+                className="hidden" 
+                aria-hidden="true" 
+                referrerPolicy="no-referrer"
+              />
             </div>
             <h4 className="text-xl md:text-2xl font-heading font-extrabold text-gray-800 leading-tight mt-2">{bonuses[currentIndex].title}</h4>
             <p className="text-sm md:text-base text-gray-600 px-2">{bonuses[currentIndex].desc}</p>

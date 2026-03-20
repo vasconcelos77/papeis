@@ -29,6 +29,9 @@ export default defineConfig(({mode}) => {
     },
     build: {
       minify: 'terser',
+      modulePreload: {
+        polyfill: true,
+      },
       terserOptions: {
         compress: {
           drop_console: true,
@@ -38,7 +41,9 @@ export default defineConfig(({mode}) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'framer-motion', 'lucide-react'],
+            'vendor-react': ['react', 'react-dom'],
+            'vendor-motion': ['motion', 'motion/react'],
+            'vendor-icons': ['lucide-react'],
           },
         },
       },

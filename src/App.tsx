@@ -253,11 +253,6 @@ export default function App() {
   const [wistiaVideo, setWistiaVideo] = useState<any>(null);
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://fast.wistia.com/assets/external/E-v1.js';
-    script.async = true;
-    document.body.appendChild(script);
-
     (window as any)._wq = (window as any)._wq || [];
     (window as any)._wq.push({
       id: 'k7sb8rq5q6',
@@ -276,13 +271,6 @@ export default function App() {
         });
       }
     });
-
-    return () => {
-      // Cleanup script if component unmounts
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
   }, []);
 
   const materialImages = [
@@ -423,6 +411,13 @@ export default function App() {
                     referrerPolicy="no-referrer"
                     loading={currentImage === 0 ? "eager" : "lazy"}
                     fetchpriority={currentImage === 0 ? "high" : "auto"}
+                  />
+                  {/* Preload next image */}
+                  <img 
+                    src={materialImages[(currentImage + 1) % materialImages.length]} 
+                    className="hidden" 
+                    aria-hidden="true" 
+                    referrerPolicy="no-referrer"
                   />
                 </AnimatePresence>
               </div>

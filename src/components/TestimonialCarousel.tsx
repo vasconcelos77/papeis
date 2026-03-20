@@ -39,6 +39,13 @@ export function TestimonialCarousel() {
             loading={current === 0 ? "eager" : "lazy"}
             fetchpriority={current === 0 ? "high" : "auto"}
           />
+          {/* Preload next image */}
+          <img 
+            src={testimonialImages[(current + 1) % testimonialImages.length]} 
+            className="hidden" 
+            aria-hidden="true" 
+            referrerPolicy="no-referrer"
+          />
         </AnimatePresence>
       </div>
 
