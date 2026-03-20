@@ -37,16 +37,16 @@ export function TestimonialCarousel() {
             className="absolute inset-0 w-full h-full object-contain"
             referrerPolicy="no-referrer"
             loading={current === 0 ? "eager" : "lazy"}
-            fetchpriority={current === 0 ? "high" : "auto"}
-          />
-          {/* Preload next image */}
-          <img 
-            src={testimonialImages[(current + 1) % testimonialImages.length]} 
-            className="hidden" 
-            aria-hidden="true" 
-            referrerPolicy="no-referrer"
+            fetchPriority={current === 0 ? "high" : "auto"}
           />
         </AnimatePresence>
+        {/* Preload next image - Moved outside AnimatePresence to fix mode="wait" error */}
+        <img 
+          src={testimonialImages[(current + 1) % testimonialImages.length]} 
+          className="hidden" 
+          aria-hidden="true" 
+          referrerPolicy="no-referrer"
+        />
       </div>
 
       <button

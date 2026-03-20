@@ -44,13 +44,14 @@ export const BonusCarousel = () => {
             </div>
             
             <div className="w-40 h-40 md:w-48 md:h-48 bg-gray-50 rounded-2xl flex items-center justify-center overflow-hidden border border-gray-100 mt-2 shadow-inner">
+               {/* Corrected fetchPriority to camelCase for React compatibility */}
                <img 
                 src={bonuses[currentIndex].image} 
                 alt={bonuses[currentIndex].title} 
                 className="w-full h-full object-contain p-2"
                 referrerPolicy="no-referrer"
                 loading={currentIndex === 0 ? "eager" : "lazy"}
-                fetchpriority={currentIndex === 0 ? "high" : "auto"}
+                fetchPriority={currentIndex === 0 ? "high" : "auto"}
               />
               {/* Preload next image */}
               <img 

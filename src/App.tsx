@@ -274,7 +274,7 @@ export default function App() {
   }, []);
 
   const materialImages = [
-    "https://i.imgur.com/MmGrhXc.jpg",
+    "/hero.jpg", // Moved from Imgur to local asset for LCP optimization
     "https://i.imgur.com/zUzHdmP.jpg",
     "https://i.imgur.com/wmDRCi6.jpg",
     "https://i.imgur.com/IxQaqtU.jpg",
@@ -410,7 +410,7 @@ export default function App() {
                     className="absolute inset-0 w-full h-full object-contain"
                     referrerPolicy="no-referrer"
                     loading={currentImage === 0 ? "eager" : "lazy"}
-                    fetchpriority={currentImage === 0 ? "high" : "auto"}
+                    fetchPriority={currentImage === 0 ? "high" : "auto"}
                   />
                   {/* Preload next image */}
                   <img 
