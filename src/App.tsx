@@ -23,9 +23,13 @@ import {
   Image as ImageIcon,
   Video,
   Gift,
-  X
+  X,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { BonusCarousel } from './components/BonusCarousel';
+import { TestimonialCarousel } from './components/TestimonialCarousel';
 
 // --- Components ---
 
@@ -36,7 +40,7 @@ const Button = ({ children, className = "", primary = true, pulse = false, onCli
     animate={pulse ? { scale: [1, 1.06, 1] } : undefined}
     transition={pulse ? { repeat: Infinity, duration: 1.5, ease: "easeInOut" } : undefined}
     onClick={onClick}
-    className={`w-full py-3 md:py-4 px-6 md:px-8 rounded-full font-bold text-base md:text-lg shadow-lg transition-all uppercase tracking-wider ${
+    className={`w-full py-3 md:py-4 px-6 md:px-8 rounded-full font-heading font-extrabold text-base md:text-lg shadow-lg transition-all uppercase tracking-wider ${
       primary 
         ? "bg-green-500 text-white hover:bg-green-600" 
         : "bg-white text-green-600 border-2 border-green-600 hover:bg-green-50"
@@ -63,7 +67,7 @@ const FAQItem = ({ question, answer }: FAQItemProps) => {
     <div className="border-b border-gray-200 py-4">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left font-semibold text-gray-800 hover:text-pink-600 transition-colors"
+        className="w-full flex justify-between items-center text-left font-heading font-semibold text-gray-800 hover:text-pink-600 transition-colors"
       >
         <span>{question}</span>
         {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -115,7 +119,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
             className="relative w-full max-w-[360px] bg-zinc-50 rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white mx-auto"
           >
             {/* Header Bar */}
-            <div className="bg-gradient-to-r from-red-600 to-red-500 py-2 px-4 flex items-center justify-center gap-2 text-white font-black text-[10px] md:text-xs uppercase tracking-wider italic shadow-inner">
+            <div className="bg-gradient-to-r from-red-600 to-red-500 py-2 px-4 flex items-center justify-center gap-2 text-white font-heading font-extrabold text-[10px] md:text-xs uppercase tracking-wider italic shadow-inner">
               <Clock size={12} className="animate-pulse" />
               OFERTA EXPIRA EM: {formatTime(timeLeft)}
             </div>
@@ -131,10 +135,10 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
             <div className="max-h-[80vh] overflow-y-auto custom-scrollbar">
               <div className="p-5 md:p-6 text-center">
                 <div className="mb-4">
-                  <h2 className="text-2xl md:text-3xl font-black text-amber-500 italic leading-none mb-1 uppercase tracking-tighter">
+                  <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-amber-500 italic leading-none mb-1 uppercase tracking-tight">
                     ESPERE!
                   </h2>
-                  <h3 className="text-lg md:text-xl font-black text-zinc-900 italic mb-2 uppercase tracking-tighter">
+                  <h3 className="text-lg md:text-xl font-heading font-extrabold text-zinc-900 italic mb-2 uppercase tracking-tight">
                     NÃO COMETA ESSE ERRO!
                   </h3>
                   <div className="h-1 w-10 bg-amber-500 mx-auto rounded-full"></div>
@@ -151,14 +155,14 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                   </div>
                   
                   <div className="relative z-10">
-                    <p className="text-[9px] font-black text-zinc-400 uppercase tracking-[0.3em] mb-2">PLANO COMPLETO</p>
+                    <p className="text-[9px] font-heading font-extrabold text-zinc-400 uppercase tracking-[0.3em] mb-2">PLANO COMPLETO</p>
                     <div className="flex items-center justify-center gap-1 mb-1">
-                      <span className="text-lg font-bold text-green-600 mt-1">R$</span>
-                      <p className="text-4xl md:text-5xl font-black text-green-600 tracking-tighter">15,90</p>
+                      <span className="text-lg font-heading font-bold text-green-600 mt-1">R$</span>
+                      <p className="text-4xl md:text-5xl font-heading font-extrabold text-green-600 tracking-tighter">15,90</p>
                     </div>
-                    <p className="text-[9px] font-bold text-zinc-400 uppercase mb-4 tracking-widest">(PAGAMENTO ÚNICO)</p>
+                    <p className="text-[9px] font-heading font-bold text-zinc-400 uppercase mb-4 tracking-widest">(PAGAMENTO ÚNICO)</p>
 
-                    <div className="bg-amber-100 text-amber-700 text-[9px] md:text-[10px] font-black py-2 px-5 rounded-full uppercase tracking-tight inline-block border border-amber-200">
+                    <div className="bg-amber-100 text-amber-700 text-[9px] md:text-[10px] font-heading font-extrabold py-2 px-5 rounded-full uppercase tracking-tight inline-block border border-amber-200">
                       ⚡ LEVE O PLANO COMPLETO POR APENAS + R$5,90!
                     </div>
                   </div>
@@ -168,7 +172,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                 <div className="mb-5">
                   <button 
                     onClick={() => setShowBonuses(!showBonuses)}
-                    className="w-full flex items-center justify-between bg-white border border-zinc-200 p-3 rounded-xl text-zinc-800 font-black text-[10px] md:text-xs uppercase tracking-widest hover:border-amber-400 transition-all shadow-sm"
+                    className="w-full flex items-center justify-between bg-white border border-zinc-200 p-3 rounded-xl text-zinc-800 font-heading font-extrabold text-[10px] md:text-xs uppercase tracking-widest hover:border-amber-400 transition-all shadow-sm"
                   >
                     <div className="flex items-center gap-2">
                       <div className="bg-amber-500 text-white p-1 rounded-md">
@@ -197,8 +201,8 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                             "Suporte WhatsApp",
                             "Garantia estendida"
                           ].map((bonus, i) => (
-                            <div key={i} className="flex items-center gap-3 text-xs md:text-sm text-zinc-700 font-bold group bg-white p-2 rounded-xl border border-zinc-100 shadow-sm">
-                              <div className="flex-shrink-0 w-16 bg-amber-100 text-amber-700 border border-amber-200 text-[9px] py-1 px-2 rounded-lg text-center font-black transition-colors">
+                            <div key={i} className="flex items-center gap-3 text-xs md:text-sm text-zinc-700 font-medium group bg-white p-2 rounded-xl border border-zinc-100 shadow-sm">
+                              <div className="flex-shrink-0 w-16 bg-amber-100 text-amber-700 border border-amber-200 text-[9px] py-1 px-2 rounded-lg text-center font-heading font-extrabold transition-colors">
                                 BÔNUS {i + 1}
                               </div>
                               <span className="tracking-tight leading-tight">{bonus}</span>
@@ -218,7 +222,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
                     animate={{ scale: [1, 1.06, 1] }}
                     transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
                     onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/jkBWe4OS59Dyx4ClkeoG"}
-                    className="w-full bg-gradient-to-b from-green-500 to-green-600 text-white font-black py-4 rounded-xl shadow-lg shadow-green-200 uppercase tracking-wider text-xs md:text-sm border-b-4 border-green-700 relative overflow-hidden group"
+                    className="w-full bg-gradient-to-b from-green-500 to-green-600 text-white font-heading font-extrabold py-4 rounded-xl shadow-lg shadow-green-200 uppercase tracking-wider text-xs md:text-sm border-b-4 border-green-700 relative overflow-hidden group"
                   >
                     <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 skew-x-12"></div>
                     GARANTIR O PLANO COMPLETO
@@ -226,7 +230,7 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
 
                   <button 
                     onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/qZkZ4iGHvWusfr3cHOL6"}
-                    className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] hover:text-zinc-800 transition-colors flex items-center justify-center gap-2 mx-auto"
+                    className="text-[9px] md:text-[10px] font-heading font-bold text-zinc-400 uppercase tracking-[0.2em] hover:text-zinc-800 transition-colors flex items-center justify-center gap-2 mx-auto"
                   >
                     <span>GARANTIR APENAS O BÁSICO</span>
                   </button>
@@ -245,6 +249,42 @@ const Popup = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) =>
 export default function App() {
   const [currentImage, setCurrentImage] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [wistiaVideo, setWistiaVideo] = useState<any>(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://fast.wistia.com/assets/external/E-v1.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    (window as any)._wq = (window as any)._wq || [];
+    (window as any)._wq.push({
+      id: 'k7sb8rq5q6',
+      options: {
+        autoPlay: true,
+        muted: true,
+      },
+      onReady: (video: any) => {
+        setWistiaVideo(video);
+        video.bind('mutechange', (isMutedNow: boolean) => {
+          setIsMuted(isMutedNow);
+        });
+        video.bind('play', () => {
+          // ensure it stays muted if it was muted
+          if (video.isMuted()) setIsMuted(true);
+        });
+      }
+    });
+
+    return () => {
+      // Cleanup script if component unmounts
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
   const materialImages = [
     "https://i.imgur.com/MmGrhXc.jpg",
     "https://i.imgur.com/zUzHdmP.jpg",
@@ -278,7 +318,7 @@ export default function App() {
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-pink-200">
       
       {/* Top Banner */}
-      <div className="bg-red-600 text-white py-2 text-center text-xs md:text-sm font-bold tracking-widest uppercase">
+      <div className="bg-red-600 text-white py-2 text-center text-xs md:text-sm font-heading font-bold tracking-widest uppercase">
         ESSA PROMOÇÃO ACABA HOJE 18/03/2026
       </div>
 
@@ -287,16 +327,16 @@ export default function App() {
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl md:text-5xl font-black leading-tight mb-4 md:mb-6"
+          className="text-[28px] md:text-5xl font-heading font-extrabold leading-snug md:leading-normal mb-4 md:mb-6 max-w-4xl mx-auto text-balance tracking-tight"
         >
-          <span className="text-pink-600">Kit Casinhas de Boneca realista em papel</span> uma opção <span className="underline decoration-pink-400">barata e fácil</span> para tirar as crianças das telas sem brigas
+          <span className="text-pink-600">Kit de casinhas de boneca em papel</span><br className="hidden md:block" /> que <span className="underline decoration-pink-400">tira sua filha do celular</span>
         </motion.h1>
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="inline-block bg-orange-500 text-white text-[10px] md:text-xs font-bold px-4 py-1 rounded-full mb-6 md:mb-8 shadow-sm"
+          className="inline-block bg-orange-500 text-white text-[10px] md:text-xs font-heading font-bold px-4 py-1 rounded-full mb-6 md:mb-8 shadow-sm"
         >
           +6 BÔNUS INCLUSOS
         </motion.div>
@@ -305,19 +345,45 @@ export default function App() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="relative max-w-[280px] md:max-w-sm mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white"
+          className="relative max-w-[220px] md:max-w-[280px] mx-auto mb-8 md:mb-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-4 md:border-8 border-white bg-gray-100 aspect-[9/16]"
         >
-          <img 
-            src="https://i.imgur.com/FEPbkd0.jpg" 
-            alt="Kit Casinhas de Boneca" 
-            className="w-full h-auto object-contain"
-            referrerPolicy="no-referrer"
-            fetchPriority="high"
-          />
+          <div className="wistia_embed wistia_async_k7sb8rq5q6 autoPlay=true muted=true" style={{ width: '100%', height: '100%' }}></div>
+          
+          {/* Custom Mute/Unmute Overlays */}
+          {wistiaVideo && isMuted && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  wistiaVideo.unmute();
+                  setIsMuted(false);
+                }}
+                className="pointer-events-auto bg-pink-600/90 hover:bg-pink-600 text-white font-heading font-bold py-3 px-5 md:px-6 rounded-full shadow-[0_0_20px_rgba(219,39,119,0.6)] flex items-center gap-2 md:gap-3 animate-pulse transition-transform hover:scale-105"
+                title="Ativar som"
+              >
+                <Volume2 size={24} />
+                <span className="text-sm md:text-base uppercase tracking-wider">Ativar Som</span>
+              </button>
+            </div>
+          )}
+
+          {wistiaVideo && !isMuted && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                wistiaVideo.mute();
+                setIsMuted(true);
+              }}
+              className="absolute top-2 right-2 md:top-4 md:right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors z-10 shadow-lg backdrop-blur-sm"
+              title="Desligar som"
+            >
+              <VolumeX size={18} />
+            </button>
+          )}
         </motion.div>
 
         <p className="text-base md:text-xl text-gray-700 max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-2">
-          Receba o molde de <span className="font-bold text-pink-600">5 casinhas de boneca em papel + bonecas interativas</span> prontas para imprimir e montar. Uma atividade criativa, barata e educativa por apenas <span className="font-black text-green-500 text-xl md:text-2xl">R$10,00</span>.
+          <span className="font-heading font-bold text-pink-600">Moldes de casinhas + bonecas interativas</span> prontas para imprimir: ela monta, cria e esquece que o celular existe por um <span className="font-heading font-extrabold text-green-500 text-xl md:text-2xl">preço acessível</span>.
         </p>
 
         <div className="max-w-md mx-auto">
@@ -333,154 +399,136 @@ export default function App() {
       {/* Material Preview */}
       <div className="bg-gray-50 py-12 md:py-16">
         <Section className="text-center">
-          <h2 className="text-xl md:text-3xl font-black mb-8 md:mb-12 uppercase tracking-tighter">
-            ESSE É O EXATO MATERIAL QUE VOCÊ VAI RECEBER
+          <h2 className="text-xl md:text-3xl font-heading font-extrabold mb-8 md:mb-12 uppercase tracking-tight">
+            Pagou, baixou, imprimiu. Sua filha já pode começar a montar HOJE MESMO
           </h2>
           
-          <div className="relative max-w-3xl mx-auto mb-6 md:mb-8 group">
-            <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-black/50 text-white text-[10px] md:text-xs px-2 md:px-3 py-0.5 md:py-1 rounded-full z-10">
-              {currentImage + 1} / {materialImages.length}
-            </div>
-            
-            <div className="relative aspect-square md:aspect-[16/10] overflow-hidden rounded-xl md:rounded-2xl bg-gray-50">
-              <AnimatePresence>
-                <motion.img 
-                  key={currentImage}
-                  src={materialImages[currentImage]} 
-                  alt={`Material Preview ${currentImage + 1}`} 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 w-full h-full object-contain"
-                  referrerPolicy="no-referrer"
-                  loading="lazy"
-                />
-              </AnimatePresence>
+          <div className="max-w-4xl mx-auto bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden mb-12 md:mb-16">
+            <div className="relative group p-4 md:p-8">
+              <div className="absolute top-6 md:top-10 right-6 md:right-10 bg-black/50 text-white text-[10px] md:text-xs px-2 md:px-3 py-0.5 md:py-1 rounded-full z-10">
+                {currentImage + 1} / {materialImages.length}
+              </div>
+              
+              <div className="relative aspect-square md:aspect-[16/10] overflow-hidden rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 shadow-inner">
+                <AnimatePresence>
+                  <motion.img 
+                    key={currentImage}
+                    src={materialImages[currentImage]} 
+                    alt={`Material Preview ${currentImage + 1}`} 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 w-full h-full object-contain"
+                    referrerPolicy="no-referrer"
+                    loading={currentImage === 0 ? "eager" : "lazy"}
+                    fetchpriority={currentImage === 0 ? "high" : "auto"}
+                  />
+                </AnimatePresence>
+              </div>
+
+              <button 
+                onClick={prevImage}
+                className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
+              >
+                <ChevronLeft size={24} className="text-pink-600" />
+              </button>
+              <button 
+                onClick={nextImage}
+                className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg transition-all z-20 hover:scale-110"
+              >
+                <ChevronRight size={24} className="text-pink-600" />
+              </button>
+
+              <div className="flex justify-center gap-2 mt-6">
+                {materialImages.map((_, idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => setCurrentImage(idx)}
+                    className={`h-2.5 rounded-full transition-all ${currentImage === idx ? 'bg-pink-600 w-8' : 'bg-gray-300 w-2.5'}`}
+                  />
+                ))}
+              </div>
             </div>
 
-            <button 
-              onClick={prevImage}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
-            >
-              <ChevronLeft size={24} className="text-pink-600" />
-            </button>
-            <button 
-              onClick={nextImage}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all z-20"
-            >
-              <ChevronRight size={24} className="text-pink-600" />
-            </button>
-
-            <div className="flex justify-center gap-2 mt-4">
-              {materialImages.map((_, idx) => (
-                <button 
-                  key={idx}
-                  onClick={() => setCurrentImage(idx)}
-                  className={`w-2 h-2 rounded-full transition-all ${currentImage === idx ? 'bg-pink-600 w-4' : 'bg-gray-300'}`}
-                />
-              ))}
+            <div className="bg-gradient-to-br from-pink-50 to-purple-50 py-8 px-6 md:py-10 md:px-12 text-center border-t border-pink-100">
+              <p className="text-2xl md:text-3xl lg:text-4xl font-heading font-extrabold leading-tight mb-3">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+                  Casinhas coloridas, bonecas e acessórios.
+                </span>
+              </p>
+              <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-600">
+                Tudo para ela criar histórias por horas! ✨
+              </p>
             </div>
           </div>
 
-          <p className="text-lg md:text-xl font-bold text-pink-600 max-w-2xl mx-auto mb-8 md:mb-12 px-2">
-            Casinhas completas, coloridas e interativas com bonecas, acessórios e cenários para criar infinitas histórias.
-          </p>
 
-          <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-6 md:p-12 rounded-[1.5rem] md:rounded-[2rem] text-white shadow-xl">
-            <h3 className="text-xl md:text-3xl font-bold mb-6 md:mb-8">
-              Ainda hoje você pode reduzir o tempo de tela da sua filha usando apenas papel, tesoura e imaginação.
-            </h3>
-            <div className="max-w-xs mx-auto">
-              <a href="#pricing">
-                <Button>QUERO RECEBER AGORA</Button>
-              </a>
-            </div>
-          </div>
         </Section>
       </div>
 
       {/* Benefits Section */}
-      <Section className="text-center">
-        <h2 className="text-2xl md:text-4xl font-black mb-2 md:mb-4 uppercase">IDEAL PARA VOCÊ</h2>
-        <p className="text-lg md:text-xl font-bold text-gray-600 mb-8 md:mb-16 uppercase tracking-widest">QUE DESEJA:</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {[
-            {
-              icon: <PhoneOff className="text-pink-500" size={28} />,
-              title: "Reduzir o tempo de celular sem brigas.",
-              desc: "As casinhas ativam o mesmo estímulo de recompensa que o celular, mas de forma saudável. Ao montar sozinha, o cérebro libera satisfação, diminuindo naturalmente a busca pelas telas."
-            },
-            {
-              icon: <Palette className="text-orange-500" size={28} />,
-              title: "Estimular criatividade e imaginação.",
-              desc: "Cada casinha vira um cenário aberto. Sem roteiro pronto, ela cria histórias, personagens e situações fortalecendo a imaginação, linguagem e pensamento criativo."
-            },
-            {
-              icon: <Banknote className="text-emerald-500" size={28} />,
-              title: "Gastar pouco com uma atividade educativa.",
-              desc: "Você imprime em casa, usa materiais simples e pode reutilizar sempre que quiser. Sem brinquedos caros, sem reposição constante e sem depender de tecnologia."
-            },
-            {
-              icon: <Heart className="text-red-500" size={28} />,
-              title: "Ver sua filha envolvida e feliz.",
-              desc: "Quando a criança constrói algo com as próprias mãos, ela sente autonomia. Esse sentimento de 'eu consegui' aumenta o foco, confiança e prolonga o tempo de envolvimento na brincadeira."
-            }
-          ].map((benefit, i) => (
-            <motion.div 
-              key={i}
-              whileHover={{ y: -5 }}
-              className="bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-lg border border-gray-100 text-left flex flex-col items-start gap-3 md:gap-4"
-            >
-              <div className="p-3 md:p-4 bg-gray-50 rounded-xl md:rounded-2xl">{benefit.icon}</div>
-              <h4 className="text-lg md:text-xl font-bold text-pink-600 leading-tight">{benefit.title}</h4>
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed">{benefit.desc}</p>
-            </motion.div>
-          ))}
+      <div className="bg-gradient-to-b from-white to-pink-50/50 py-16 md:py-24 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-pink-100/40 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 -right-24 w-80 h-80 bg-purple-100/40 rounded-full blur-3xl"></div>
         </div>
-      </Section>
 
-      {/* What You'll Receive */}
-      <div className="bg-pink-50 py-12 md:py-16">
-        <Section className="text-center">
-          <h2 className="text-2xl md:text-4xl font-black mb-4 text-pink-600 uppercase">TUDO O QUE VOCÊ VAI RECEBER:</h2>
-          <p className="text-base md:text-lg text-gray-700 mb-8 md:mb-12 px-2">
-            Receba o molde de <span className="font-bold">5 casinhas de boneca em papel + bonecas interativas</span> prontas para imprimir e montar.
-          </p>
+        <Section className="text-center relative z-10">
+          <div className="max-w-4xl mx-auto mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-extrabold mb-4 uppercase tracking-tight text-gray-900">
+              ESSES BRINQUEDOS SÃO IDEAIS PARA VOCÊ
+            </h2>
+            <p className="text-xl md:text-2xl lg:text-3xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 uppercase tracking-widest">
+              QUE DESEJA:
+            </p>
+          </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 bg-white p-6 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl">
-            <div className="w-full md:w-1/2 flex justify-center">
-              <img 
-                src="https://i.imgur.com/Sio8CBx.jpg" 
-                alt="Kit Completo" 
-                className="rounded-xl md:rounded-2xl shadow-lg w-full max-w-[240px] md:max-w-[320px] h-auto"
-                referrerPolicy="no-referrer"
-                loading="lazy"
-              />
-            </div>
-            <div className="w-full md:w-1/2 text-left">
-              <h3 className="text-xl md:text-2xl font-black mb-4 md:mb-6 text-gray-800">Kit de 5 Casinhas de Boneca realista em Papel</h3>
-              <ul className="space-y-2 md:space-y-3">
-                {[
-                  "Kit 5 modelos diferentes de casinhas realistas",
-                  "Kit de 3 Bonecas interativas",
-                  "Acessórios para a casa e para as bonecas",
-                  "Arquivo em PDF pronto para imprimir",
-                  "Pode imprimir quantas vezes quiser",
-                  "Passo a passo de montagem",
-                  "Imagens ilustrativas de montagem",
-                  "Vídeo aula com passo a passo para montar",
-                  "Bordas sinalizadas com \"corte aqui\" e \"cole aqui\""
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 md:gap-3 text-gray-700 font-medium text-sm md:text-base">
-                    <Check size={18} className="text-green-500 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 md:mt-6 font-bold text-gray-400 italic text-sm">E muito mais…</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {[
+              {
+                icon: <PhoneOff className="text-pink-500" size={32} />,
+                title: "Tirar o celular da mão dela sem virar a vilã da história",
+                desc: "As casinhas e bonecas ativam o mesmo prazer que o celular, só que de forma saudável. Ela monta, cria e se diverte. Você respira."
+              },
+              {
+                icon: <Palette className="text-orange-500" size={32} />,
+                title: "Desenvolver a criatividade brincando",
+                desc: "Cada casinha vira um mundo novo. Ela inventa histórias, cria personagens e desenvolve imaginação. Sem roteiro, sem limite."
+              },
+              {
+                icon: <Banknote className="text-emerald-500" size={32} />,
+                title: "Atividade educativa de verdade, sem gastar quase nada",
+                desc: "Por um preço acessível você imprime quantas vezes quiser, em casa, com papel. Sem brinquedo caro, sem pilha, sem repor nada."
+              },
+              {
+                icon: <Heart className="text-red-500" size={32} />,
+                title: "Ver sua filha feliz, focada e orgulhosa do que criou",
+                desc: "Quando ela monta com as próprias mãos, sente que conseguiu. Esse sentimento aumenta a confiança, o foco e faz ela querer montar mais."
+              }
+            ].map((benefit, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -8 }}
+                className="group relative bg-white p-8 md:p-10 rounded-[2rem] shadow-xl border border-pink-100/50 text-left flex flex-col items-start gap-4 md:gap-6 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-pink-200"
+              >
+                {/* Subtle corner gradient */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-50 to-purple-50 rounded-bl-full -z-10 transition-transform duration-500 group-hover:scale-110"></div>
+                
+                <div className="p-4 md:p-5 bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl shadow-inner group-hover:scale-110 transition-transform duration-300">
+                  {benefit.icon}
+                </div>
+                
+                <h4 className="text-xl md:text-2xl font-heading font-bold text-gray-900 leading-tight group-hover:text-pink-600 transition-colors duration-300">
+                  {benefit.title}
+                </h4>
+                
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                  {benefit.desc}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </Section>
       </div>
@@ -488,50 +536,57 @@ export default function App() {
       {/* Bonuses Section */}
       <div className="bg-yellow-50 py-12 md:py-16">
         <Section className="text-center">
-          <div className="inline-block bg-orange-500 text-white text-[10px] md:text-xs font-bold px-4 py-1 rounded-full mb-4">BÔNUS HOJE</div>
-          <h2 className="text-2xl md:text-5xl font-black mb-4 text-pink-600 uppercase tracking-tighter">E NÃO PARA POR AÍ...</h2>
-          <p className="text-lg md:text-xl font-bold text-gray-600 mb-8 md:mb-16">Você também vai receber:</p>
+          <div className="inline-block bg-orange-500 text-white text-[10px] md:text-xs font-heading font-bold px-4 py-1 rounded-full mb-4">BÔNUS HOJE</div>
+          <h2 className="text-2xl md:text-5xl font-heading font-extrabold mb-4 text-pink-600 uppercase tracking-tight">E NÃO PARA POR AÍ...</h2>
+          <p className="text-lg md:text-xl font-medium text-gray-600 mb-8 md:mb-16">Você também vai receber:</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {[
-              { id: "01", title: "Kit Boneca Sereia", desc: "Monte uma boneca com a temática Sereia para criar novos cenários.", icon: <Star className="text-blue-400" />, image: "https://i.imgur.com/2Rysnay.jpg" },
-              { id: "02", title: "Kit Boneca Professora", desc: "Monte uma nova boneca para estimular novas brincadeiras com as casinhas.", icon: <Star className="text-yellow-400" />, image: "https://i.imgur.com/YUbVHkc.jpg" },
-              { id: "03", title: "Kit Maquiagem e Guarda-Roupa", desc: "Mais acessórios para personalizar as suas bonecas e aumentar o tempo de diversão.", icon: <Star className="text-pink-400" />, image: "https://i.imgur.com/Dm5cjTx.jpg" },
-              { id: "04", title: "Vídeo Aula Completa", desc: "Coloque sua filha para acompanhar um vídeo com o passo a passo simples para montar todas as casinhas.", icon: <Video className="text-red-400" />, image: "https://i.imgur.com/XMVR3cH.jpg" },
-              { id: "05", title: "Suporte 24h via WhatsApp", desc: "Se precisar de ajuda ou tirar alguma dúvida, não importa a hora, nos envie mensagem.", icon: <MessageCircle className="text-emerald-400" />, image: "https://i.imgur.com/J9zVbXl.jpg" },
-              { id: "06", title: "Garantia Estendida", desc: "Por lei devemos entregar 7 dias de garantia, mas estendemos para 10 dias. Teste sem risco.", icon: <ShieldCheck className="text-orange-400" />, image: "https://i.imgur.com/Ne59Jby.jpg" }
-            ].map((bonus, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ scale: 1.02 }}
-                className="bg-white p-5 md:p-6 rounded-2xl md:rounded-3xl shadow-md border border-yellow-100 text-center flex flex-col items-center gap-3 md:gap-4"
-              >
-                <span className="text-[10px] md:text-xs font-black text-orange-500 uppercase tracking-widest">#BÔNUS {bonus.id} HOJE</span>
-                <div className="w-1/2 md:w-2/5 aspect-square mx-auto bg-white rounded-xl md:rounded-2xl flex items-center justify-center overflow-hidden">
-                   <img 
-                    src={bonus.image} 
-                    alt={bonus.title} 
-                    className="w-full h-full object-contain p-1 md:p-2"
+          <BonusCarousel />
+        </Section>
+      </div>
+
+      {/* Testimonials Section */}
+      <div className="bg-white py-16 md:py-24">
+        <Section className="text-center">
+          <div className="max-w-4xl mx-auto mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-heading font-extrabold mb-8 uppercase tracking-tight text-gray-900">
+              O que quem já comprou fala sobre:
+            </h2>
+            
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 md:gap-4 bg-pink-50 border border-pink-100 px-5 py-3 rounded-2xl shadow-sm mx-auto">
+              <div className="flex -space-x-3 shrink-0">
+                {[
+                  "https://i.imgur.com/6EjBgOY.png",
+                  "https://i.imgur.com/P31dW6q.png",
+                  "https://i.imgur.com/zXRIVXq.png"
+                ].map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt="Mãe"
+                    className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-white object-cover"
                     referrerPolicy="no-referrer"
                     loading="lazy"
                   />
-                </div>
-                <h4 className="text-base md:text-lg font-black text-gray-800 leading-tight">{bonus.title}</h4>
-                <p className="text-xs md:text-sm text-gray-600">{bonus.desc}</p>
-              </motion.div>
-            ))}
+                ))}
+              </div>
+              <p className="text-sm md:text-base font-bold text-pink-600 leading-tight">
+                Mais de 4.587 mães e professoras já garantiram o acesso.
+              </p>
+            </div>
           </div>
+
+          <TestimonialCarousel />
         </Section>
       </div>
 
       {/* Pricing Section */}
       <Section className="text-center" id="pricing">
-        <h2 className="text-2xl md:text-4xl font-black mb-8 md:mb-16 uppercase">ESCOLHA SEU PLANO <span className="inline-block animate-bounce">⬇️</span></h2>
+        <h2 className="text-2xl md:text-4xl font-heading font-extrabold mb-8 md:mb-16 uppercase tracking-tight">ESCOLHA SEU PLANO <span className="inline-block animate-bounce">⬇️</span></h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Basic Plan */}
           <div className="bg-white p-6 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl border border-gray-100 flex flex-col">
-            <h3 className="text-xl md:text-2xl font-black mb-6 md:mb-8 uppercase tracking-widest text-gray-400">PLANO BÁSICO</h3>
+            <h3 className="text-xl md:text-2xl font-heading font-bold mb-6 md:mb-8 uppercase tracking-widest text-gray-400">PLANO BÁSICO</h3>
             <div className="mb-6 md:mb-8 flex-1">
               <img 
                 src="https://i.imgur.com/FE9hX3D.jpg" 
@@ -541,14 +596,14 @@ export default function App() {
                 loading="lazy"
               />
               <ul className="text-left space-y-3 md:space-y-4 mb-6 md:mb-8">
-                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-sm md:text-base">
+                <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-sm md:text-base">
                   <Check size={18} className="text-green-500 shrink-0" />
                   <span>Kit 5 Casinhas exclusivas realistas</span>
                 </li>
               </ul>
             </div>
             <div className="mb-6 md:mb-8">
-              <p className="text-3xl md:text-4xl font-black text-black mb-1">R$10,00</p>
+              <p className="text-3xl md:text-4xl font-heading font-extrabold text-black mb-1">R$10,00</p>
             </div>
             <Button 
               primary={false} 
@@ -561,10 +616,10 @@ export default function App() {
 
           {/* Complete Plan */}
           <div className="relative bg-white p-6 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl border-4 border-pink-500 flex flex-col transform md:scale-105 z-10">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-pink-500 text-white text-[10px] md:text-xs font-black px-4 md:px-6 py-1.5 md:py-2 rounded-full uppercase tracking-widest shadow-lg whitespace-nowrap">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-pink-500 text-white text-[10px] md:text-xs font-heading font-bold px-4 md:px-6 py-1.5 md:py-2 rounded-full uppercase tracking-widest shadow-lg whitespace-nowrap">
               MAIS VENDIDO
             </div>
-            <h3 className="text-xl md:text-2xl font-black mb-6 md:mb-8 uppercase tracking-widest text-pink-600">PLANO COMPLETO COM TODOS OS BÔNUS</h3>
+            <h3 className="text-xl md:text-2xl font-heading font-extrabold mb-6 md:mb-8 uppercase tracking-widest text-pink-600">PLANO COMPLETO COM TODOS OS BÔNUS</h3>
             <div className="mb-6 md:mb-8 flex-1">
               <img 
                 src="https://i.imgur.com/56f3LzX.jpg" 
@@ -574,24 +629,24 @@ export default function App() {
                 loading="lazy"
               />
               <ul className="text-left space-y-3 mb-6 md:mb-8">
-                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-xs md:text-sm">
                   <Check size={16} className="text-green-500 shrink-0" />
                   <span>Kit 5 Casinhas de Boneca em Papel em PDF para imprimir ultrarealista</span>
                 </li>
-                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-xs md:text-sm">
                   <Check size={16} className="text-green-500 shrink-0" />
                   <span>Acesso Vitálicio</span>
                 </li>
-                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-xs md:text-sm">
                   <Check size={16} className="text-green-500 shrink-0" />
                   <span>Garantia de 10 dias</span>
                 </li>
-                <li className="flex items-start gap-2 md:gap-3 font-bold text-gray-700 text-xs md:text-sm">
+                <li className="flex items-start gap-2 md:gap-3 font-medium text-gray-700 text-xs md:text-sm">
                   <Check size={16} className="text-green-500 shrink-0" />
                   <span>Atualizações Semanais no conteúdo</span>
                 </li>
 
-                <div className="pt-3 md:pt-4 pb-1 md:pb-2 text-amber-600 font-black text-[9px] md:text-xs uppercase tracking-widest flex items-center gap-2">
+                <div className="pt-3 md:pt-4 pb-1 md:pb-2 text-amber-600 font-heading font-extrabold text-[9px] md:text-xs uppercase tracking-widest flex items-center gap-2">
                   <span className="h-px bg-amber-200 flex-1"></span>
                   7 BÔNUS INCLUSOS 🎁
                   <span className="h-px bg-amber-200 flex-1"></span>
@@ -610,10 +665,10 @@ export default function App() {
                     <li key={i} className="group relative flex flex-col gap-1 bg-white p-3 rounded-2xl border border-amber-100 shadow-sm hover:shadow-md hover:border-amber-400 transition-all duration-300 overflow-hidden">
                       <div className="absolute top-0 left-0 w-1 h-full bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[9px] font-black text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                        <span className="text-[9px] font-heading font-extrabold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
                           {item.label}
                         </span>
-                        <span className="text-[9px] font-bold text-gray-400 line-through">
+                        <span className="text-[9px] font-medium text-gray-400 line-through">
                           {item.value}
                         </span>
                       </div>
@@ -621,9 +676,9 @@ export default function App() {
                         <div className="bg-amber-500 rounded-full p-0.5">
                           <Check size={12} className="text-white" />
                         </div>
-                        <span className="font-bold text-gray-800 text-xs leading-tight">{item.text}</span>
+                        <span className="font-medium text-gray-800 text-xs leading-tight">{item.text}</span>
                       </div>
-                      <div className="text-[10px] font-black text-amber-600 mt-1 flex items-center gap-1">
+                      <div className="text-[10px] font-heading font-extrabold text-amber-600 mt-1 flex items-center gap-1">
                         <Gift size={10} /> INCLUSO GRÁTIS
                       </div>
                     </li>
@@ -632,25 +687,72 @@ export default function App() {
               </ul>
             </div>
             <div className="mb-6 md:mb-8">
-              <p className="text-red-600 line-through text-base md:text-lg font-bold">De R$97,90</p>
-              <p className="text-[10px] md:text-sm font-bold text-green-500 uppercase mb-1 md:mb-2">Por apenas:</p>
-              <p className="text-4xl md:text-5xl font-black text-green-500 mb-1 md:mb-2">R$27,90</p>
-              <div className="bg-green-100 text-green-700 text-[10px] md:text-xs font-black py-1 px-3 rounded-full inline-block">
+              <p className="text-red-600 line-through text-base md:text-lg font-heading font-bold">De R$97,90</p>
+              <p className="text-[10px] md:text-sm font-heading font-bold text-green-500 uppercase mb-1 md:mb-2">Por apenas:</p>
+              <p className="text-4xl md:text-5xl font-heading font-extrabold text-green-500 mb-1 md:mb-2">R$27,90</p>
+              <div className="bg-green-100 text-green-700 text-[10px] md:text-xs font-heading font-extrabold py-1 px-3 rounded-full inline-block">
                 Você economiza R$70,00
               </div>
             </div>
             <Button pulse={true} className="shadow-lg shadow-green-200 py-3 md:py-4" onClick={() => window.location.href = "https://www.ggcheckout.com/checkout/v5/txOIFXqyODBujlDkEJwL"}>GARANTIR O PLANO COMPLETO</Button>
-            <p className="mt-4 text-xs font-bold text-orange-600 flex items-center justify-center gap-1">
+            <p className="mt-4 text-xs font-medium text-orange-600 flex items-center justify-center gap-1">
               🔥 Oferta promocional por tempo limitado.
             </p>
           </div>
         </div>
       </Section>
 
+      {/* Guarantee Section */}
+      <div className="bg-white py-16 md:py-24 border-t border-gray-100">
+        <Section className="text-center">
+          <div className="max-w-4xl mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative mb-8">
+                <div className="absolute inset-0 bg-pink-100 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+                <div className="relative bg-white p-6 rounded-full shadow-xl border border-pink-50">
+                  <ShieldCheck className="text-pink-500 w-16 h-16 md:w-24 md:h-24" />
+                </div>
+                <div className="absolute -bottom-2 -right-2 bg-orange-500 text-white text-xs md:text-sm font-heading font-black px-3 py-1 rounded-full shadow-lg transform rotate-12">
+                  7 DIAS
+                </div>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-heading font-extrabold mb-6 text-gray-900 uppercase tracking-tight">
+                GARANTIA INCONDICIONAL DE 7 DIAS
+              </h2>
+              
+              <p className="text-xl md:text-2xl font-heading font-bold text-pink-600 mb-8 uppercase tracking-widest">
+                Sua satisfação ou seu dinheiro de volta.
+              </p>
+
+              <div className="bg-gray-50 p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] border border-gray-100 relative">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-2 rounded-full border border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                  Compromisso Real
+                </div>
+                <p className="text-base md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                  Eu confio tanto na qualidade desse material e no quanto sua filha vai amar, que ofereço uma garantia total de 7 dias. Se por qualquer motivo você achar que não é para você, basta me enviar um e-mail e eu devolvo 100% do seu investimento. Sem perguntas, sem burocracia e continuamos amigas.
+                </p>
+              </div>
+
+              <div className="mt-12 flex items-center justify-center gap-4 text-gray-400">
+                <div className="h-px w-12 bg-gray-200"></div>
+                <p className="text-xs font-bold uppercase tracking-widest">Risco Zero para Você</p>
+                <div className="h-px w-12 bg-gray-200"></div>
+              </div>
+            </motion.div>
+          </div>
+        </Section>
+      </div>
+
       {/* FAQ Section */}
       <div className="bg-gray-50 py-12 md:py-16">
         <Section>
-          <h2 className="text-2xl md:text-4xl font-black mb-8 md:mb-12 text-center uppercase tracking-tighter">PERGUNTAS FREQUENTES</h2>
+          <h2 className="text-2xl md:text-4xl font-heading font-extrabold mb-8 md:mb-12 text-center uppercase tracking-tight">PERGUNTAS FREQUENTES</h2>
           <div className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-lg">
             {[
               { q: "É seguro?", a: "Sim! Utilizamos as plataformas de pagamento mais seguras do Brasil. Seus dados estão protegidos e a entrega é garantida." },
@@ -671,7 +773,7 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4 text-center">
         <div className="max-w-4xl mx-auto">
-          <p className="text-red-500 font-black text-lg mb-4 uppercase tracking-widest">PIRATARIA É CRIME.</p>
+          <p className="text-red-500 font-heading font-extrabold text-lg mb-4 uppercase tracking-widest">PIRATARIA É CRIME.</p>
           <p className="text-gray-400 text-sm mb-8">Proibido a comercialização desse produto fora dessa página. Denuncie.</p>
           <div className="h-px bg-gray-800 w-full mb-8"></div>
           <p className="text-gray-500 text-xs mb-4">Todos os direitos reservados a Tuto Biblioteca digital.</p>
