@@ -31,21 +31,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BonusCarousel } from './components/BonusCarousel';
 import { TestimonialCarousel } from './components/TestimonialCarousel';
 
-function redirectWithParams(destination: string) {
-  const currentParams = window.location.search;
-
-  if (!currentParams) {
-    window.location.href = destination;
-    return;
-  }
-
-  if (destination.includes("?")) {
-    window.location.href = destination + "&" + currentParams.substring(1);
-  } else {
-    window.location.href = destination + currentParams;
-  }
-}
-
 // --- Components ---
 
 const Button = ({ children, className = "", primary = true, pulse = false, onClick }: { children: React.ReactNode, className?: string, primary?: boolean, pulse?: boolean, onClick?: () => void }) => (
