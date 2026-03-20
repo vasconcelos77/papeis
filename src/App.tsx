@@ -302,18 +302,6 @@ export default function App() {
     "https://i.imgur.com/WdgUvIY.jpg",
   ];
 
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0, 1, 9]));
-
-  useEffect(() => {
-    setLoadedImages(prev => {
-      const newSet = new Set(prev);
-      newSet.add(currentImage);
-      newSet.add((currentImage + 1) % materialImages.length);
-      newSet.add((currentImage - 1 + materialImages.length) % materialImages.length);
-      return newSet;
-    });
-  }, [currentImage, materialImages.length]);
-
   const nextImage = useCallback(() => {
     setCurrentImage((prev) => (prev + 1) % materialImages.length);
   }, [materialImages.length]);
@@ -446,18 +434,15 @@ export default function App() {
               
               <div className="relative aspect-square md:aspect-[16/10] overflow-hidden rounded-xl md:rounded-2xl bg-gray-50 border border-gray-100 shadow-inner">
                 {materialImages.map((src, idx) => (
-                  loadedImages.has(idx) && (
-                    <img 
-                      key={idx}
-                      src={src} 
-                      alt={`Material Preview ${idx + 1}`} 
-                      className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${currentImage === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                      referrerPolicy="no-referrer"
-                      loading={idx === 0 ? "eager" : "lazy"}
-                      fetchPriority={idx === 0 ? "high" : "auto"}
-                      decoding={idx === 0 ? "sync" : "async"}
-                    />
-                  )
+                  <img 
+                    key={idx}
+                    src={src} 
+                    alt={`Material Preview ${idx + 1}`} 
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${currentImage === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 ))}
               </div>
 
